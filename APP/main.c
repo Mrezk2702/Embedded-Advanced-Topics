@@ -9,13 +9,15 @@ int main()
 
 	while(1)
 	{
-//		TrafficLightMainFunction();
+		//		TrafficLightMainFunction();
 
-		float32 x=10.5;
-		float32 z=8;
+		float32 x=-100.0;
+		float32 z=0.01;
 		CLCD_voidGoToXY(0,0);
-		FP32 y=FixedPointAddition(x, z);
-		FixedPointPrintNumber(y,1,1);
+		sint32 y=FixedPointDivision(x, z);
+
+//		CLCD_voidWriteNumber(y);
+		FixedPointPrintNumber(y,0,0);
 
 	}
 

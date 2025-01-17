@@ -1,10 +1,17 @@
 #ifndef STACK_H_
 #define STACK_H_
-#define STACK_MAX 3
+#include "../../LIB/STD_TYPES.h"
 
+#if defined(co_TRAFFIC)
 typedef void (*pFunc)(void);
-
 typedef pFunc StackEntry;
+#define STACK_MAX 3
+#elif defined(co_FIXEDPOINT)
+typedef uint8 StackEntry;
+#define STACK_MAX 11
+#endif
+
+
 typedef struct stack
 {
     int Top;

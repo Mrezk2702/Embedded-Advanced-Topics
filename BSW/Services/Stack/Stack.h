@@ -9,6 +9,9 @@ typedef pFunc StackEntry;
 #elif defined(co_FIXEDPOINT)
 typedef uint8 StackEntry;
 #define STACK_MAX 11
+#else
+typedef uint8 StackEntry;
+#define STACK_MAX 10
 #endif
 
 

@@ -85,9 +85,9 @@
 #define PORTC_PIN7_INIT_VALUE          0
 
 
-#define PORTD_PIN0_INIT_VALUE          0
+#define PORTD_PIN0_INIT_VALUE          1
 #define PORTD_PIN1_INIT_VALUE          0
-#define PORTD_PIN2_INIT_VALUE          0
+#define PORTD_PIN2_INIT_VALUE          1
 #define PORTD_PIN3_INIT_VALUE          0
 #define PORTD_PIN4_INIT_VALUE          0
 #define PORTD_PIN5_INIT_VALUE          0

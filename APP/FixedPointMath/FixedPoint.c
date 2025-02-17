@@ -15,6 +15,14 @@
 static void PrintFixedPointAsFloat(StackEntry e);
 
 
+
+void FixedPoint_voidInit(void)
+{
+	PORT_voidInit();
+	CLCD_voidInit();
+}
+
+
 inline FP32 convertToFixed(float32 Copy_F32Number)
 {
 	FP32 ConvertedFP=(FP32)(Copy_F32Number * (float32)SCALING_FACTOR);

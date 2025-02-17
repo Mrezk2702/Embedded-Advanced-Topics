@@ -2,10 +2,13 @@
 #include "../BSW/LIB/BIT_MATH.h"
 #include "FixedPointMath/FixedPoint.h"
 #include "TrafficLights/inc/TrafficLightsControl_interface.h"
+#include "EventBasedArch/EventBased.h"
 
+
+#if defined(co_FIXEDPOINT)
 int main()
 {
-	TrafficLightInit();
+	FixedPoint_voidInit();
 
 	while(1)
 	{
@@ -24,5 +27,39 @@ int main()
 
 
 }
+#endif
 
 
+#if defined(co_TRAFFIC)
+int main()
+{
+	TrafficLightInit();
+
+	while(1)
+	{
+		TrafficLightMainFunction();
+
+
+
+	}
+
+
+
+}
+#endif
+
+#if defined(co_EVENT_DRIVEN)
+int main()
+{
+	EDA_voidInit();
+//	DIO_SetPinVal(DIO_PORTC, DIO_Pin1,DIO_HIGH);
+	while(1)
+	{
+		EDA_voidRunnable();
+
+	}
+
+
+
+}
+#endif

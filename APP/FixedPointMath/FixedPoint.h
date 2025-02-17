@@ -17,5 +17,6 @@ FP32 FixedPointSubtraction(float32 op1,float32 op2);
 FP32 FixedPointMultiplication(float32 op1,float32 op2);
 FP32 FixedPointDivision(float32 op1,float32 op2);
 void FixedPointPrintNumber(FP32 num,uint8 x,uint8 y);
+void FixedPoint_voidInit(void);
 
 #endif /* APP_FIXED_POINT_MATH_FIXEDPOINT_H_ */

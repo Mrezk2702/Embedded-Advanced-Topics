@@ -7,8 +7,18 @@
 
 
 #include "EventBased.h"
+#include <util/atomic.h>
+
+static void handleExtiEvent(void);
+static void handleTimerEvent(void);
 
 
+typedef void (*EventHandler)(void);
+
+EventHandler eventHandlers[EVENT_COUNT] = {
+    handleExtiEvent, // EXTI_EVENT
+    handleTimerEvent // TIMER_EVENT
+};
 
 Queue event_q;
 
@@ -25,7 +35,12 @@ static void Timer_Event(void)
 			/*Preventing to trigger the event if the button
 			 * is pressed and hold*/
 			holdButton=1;
-			Enqueue(&event_q, TIMER_EVENT);
+			ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+			{
+
+				Enqueue(&event_q, TIMER_EVENT);
+			}
+
 		}
 		else if(Loc_u8PinVal==1)
 		{
@@ -36,8 +51,11 @@ static void Timer_Event(void)
 
 void EXTI_Button_Handler(void)
 {
+	ATOMIC_BLOCK(ATOMIC_RESTORESTATE){
 
-	Enqueue(&event_q, EXTI_EVENT);
+		Enqueue(&event_q, EXTI_EVENT);
+
+	    }
 
 }
 
@@ -66,6 +84,14 @@ void EDA_voidInit(void)
 
 }
 
+static void handleExtiEvent(void) {
+    DIO_SetPinVal(DIO_PORTC, DIO_Pin0, DIO_HIGH);
+}
+
+static void handleTimerEvent(void) {
+    DIO_SetPinVal(DIO_PORTC, DIO_Pin1, DIO_HIGH);
+}
+
 void EDA_voidRunnable(void)
 {
 
@@ -75,16 +101,13 @@ void EDA_voidRunnable(void)
 	{
 
 
+		ATOMIC_BLOCK(ATOMIC_RESTORESTATE){
 		Dequeue(&q, &event_q);
+		}
 
-		switch (q)
+		if(q<EVENT_COUNT&&eventHandlers[q]!=NULL)
 		{
-		case EXTI_EVENT:
-			DIO_SetPinVal(DIO_PORTC,DIO_Pin0, DIO_HIGH);
-			break;
-		case TIMER_EVENT:
-			DIO_SetPinVal(DIO_PORTC,DIO_Pin1, DIO_HIGH);
-			break;
+			eventHandlers[q]();
 		}
 	}
 	else

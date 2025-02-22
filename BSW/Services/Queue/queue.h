@@ -4,8 +4,9 @@
 
 typedef enum
 {
-	TIMER_EVENT=2,
-	EXTI_EVENT=4
+	TIMER_EVENT=0,
+	EXTI_EVENT,
+	EVENT_COUNT
 }EVENTS;
 typedef EVENTS QueueEntry;
 
